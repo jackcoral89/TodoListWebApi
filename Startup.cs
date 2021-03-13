@@ -18,6 +18,9 @@ namespace TodoListApp
 {
 	public class Startup
 	{
+
+		readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
 		public Startup(IConfiguration configuration)
 		{
 			Configuration = configuration;
@@ -28,6 +31,10 @@ namespace TodoListApp
 		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services)
 		{
+			services.AddCors(options =>
+				{
+					options.AddPolicy(name: MyAllowSpecificOrigins, builder => builder.WithOrigins("http://localhost:4200"));
+				});
 
 			services.AddDbContext<TodoContext>(opt => opt.UseInMemoryDatabase("TodoList"));
 			// services.AddDbContext<TodoContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection_Dev")));
@@ -48,6 +55,8 @@ namespace TodoListApp
 			app.UseHttpsRedirection();
 
 			app.UseRouting();
+
+			app.UseCors(MyAllowSpecificOrigins);
 
 			app.UseAuthorization();
 
