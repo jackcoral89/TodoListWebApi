@@ -13,6 +13,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Microsoft.EntityFrameworkCore;
 using TodoApi.Models;
+using TodoListApp.Models;
 
 namespace TodoListApp
 {
@@ -32,7 +33,7 @@ namespace TodoListApp
 		public void ConfigureServices(IServiceCollection services)
 		{
 
-			var connectionString = Configuration.GetConnectionString("DefaultConnection_Dev");
+			var connectionString = Configuration.GetConnectionString("DefaultConnection");
 			var originUrlAllowed = "http://localhost:4200";
 
 			services.AddCors(options => options.AddPolicy(name: MyAllowSpecificOrigins, builder => builder.WithOrigins(originUrlAllowed)));
@@ -41,7 +42,7 @@ namespace TodoListApp
 
 			services.AddControllers().AddJsonOptions(options => options.JsonSerializerOptions.PropertyNamingPolicy = null);
 
-			services.AddDbContext<TodoContext>(options => options.UseSqlServer(connectionString));
+			services.AddDbContext<ApplicationDBContext>(options => options.UseSqlServer(connectionString));
 
 			// Enable swagger
 			services.AddSwaggerGen(c => c.SwaggerDoc("v1", new OpenApiInfo { Title = "TodoListApp", Version = "v1" }));

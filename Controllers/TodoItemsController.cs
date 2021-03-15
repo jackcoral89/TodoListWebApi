@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TodoApi.Models;
+using TodoListApp.Models;
 
 namespace TodoApi.Controllers
 {
@@ -13,9 +14,9 @@ namespace TodoApi.Controllers
 	[ApiController]
 	public class TodoItemsController : ControllerBase
 	{
-		private readonly TodoContext _context;
+		private readonly ApplicationDBContext _context;
 
-		public TodoItemsController(TodoContext context)
+		public TodoItemsController(ApplicationDBContext context)
 		{
 			_context = context;
 		}
