@@ -31,14 +31,19 @@ namespace TodoListApp
 		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services)
 		{
-			services.AddCors(options =>
-				{
-					options.AddPolicy(name: MyAllowSpecificOrigins, builder => builder.WithOrigins("http://localhost:4200"));
-				});
 
-			services.AddDbContext<TodoContext>(opt => opt.UseInMemoryDatabase("TodoList"));
-			// services.AddDbContext<TodoContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection_Dev")));
-			services.AddControllers();
+			var connectionString = Configuration.GetConnectionString("DefaultConnection_Dev");
+			var originUrlAllowed = "http://localhost:4200";
+
+			services.AddCors(options => options.AddPolicy(name: MyAllowSpecificOrigins, builder => builder.WithOrigins(originUrlAllowed)));
+			
+			// services.AddDbContext<TodoContext>(opt => opt.UseInMemoryDatabase("TodoList"));
+
+			services.AddControllers().AddJsonOptions(options => options.JsonSerializerOptions.PropertyNamingPolicy = null);
+
+			services.AddDbContext<TodoContext>(options => options.UseSqlServer(connectionString));
+
+			// Enable swagger
 			services.AddSwaggerGen(c => c.SwaggerDoc("v1", new OpenApiInfo { Title = "TodoListApp", Version = "v1" }));
 		}
 
