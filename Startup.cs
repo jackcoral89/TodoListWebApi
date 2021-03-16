@@ -37,7 +37,7 @@ namespace TodoListApp
 			var originUrlAllowed = "http://localhost:4200";
 
 			services.AddCors(options => options.AddPolicy(name: MyAllowSpecificOrigins, builder => builder.WithOrigins(originUrlAllowed)));
-			
+
 			// services.AddDbContext<TodoContext>(opt => opt.UseInMemoryDatabase("TodoList"));
 
 			services.AddControllers().AddJsonOptions(options => options.JsonSerializerOptions.PropertyNamingPolicy = null);
@@ -62,7 +62,7 @@ namespace TodoListApp
 
 			app.UseRouting();
 
-			app.UseCors(MyAllowSpecificOrigins);
+			app.UseCors(item => item.AllowAnyMethod().AllowAnyHeader().SetIsOriginAllowed(origin => true));
 
 			app.UseAuthorization();
 
