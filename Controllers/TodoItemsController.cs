@@ -10,7 +10,7 @@ using TodoListApp.Migrations;
 
 namespace TodoApi.Controllers
 {
-    [ApiController]
+	[ApiController]
 	public class TodoItemsController : ControllerBase
 	{
 		// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
