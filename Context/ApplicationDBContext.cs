@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TodoApi.Models;
 
-namespace TodoListApp.Models
+namespace TodoListApp.Migrations
 {
     public class ApplicationDBContext : DbContext
     {
